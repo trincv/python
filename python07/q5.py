@@ -1,31 +1,32 @@
-dictionary = {}
+stock = {"teclado": 12, "mouse": 5, "monitor": 2}
+pending = []
 
-while True:
 
-   name = input("Insira o nome do aluno: ")
+while (True):
 
-   if name == "FIM":
+   product = input("Insira o produto: ")
+
+   if (product == "FIM"):
       break
 
-   grade = list(map(float, input("Insira as tres notas do aluno separados por espaço: ").split()))
+   if (product not in stock.keys()):
+      print("Produto não existente no estoque")
+      continue
 
-   media = sum(grade) / len(grade)
+   quantity = int(input("Insira a quantidade desejada do produto: "))
 
-   if media >= 7:
-      status = "APROVADO"
-   elif media < 7 and media >= 5:
-      status = "Recuperação"
-   else:
-      status = "Reprovado"  
+   order = [{"produto": product}, {"qtd": quantity}]
+
+   if (quantity > stock.get(product)):
+      print("Quantidade acima do estocado, pedido em lista de pendentes")
+      pending.append(order)
+      continue
    
-   dictionary[name] = {
-      "notas" : list(grade),
-      "media" : round(media,2),
-      "status" : status
-   }
+   stock[product] -= quantity
+   print("Pedido concluído")
 
-for name, info in dictionary.items():
-   print(f"\nNome: {name}")
-   print(f"Notas: {info["notas"]}")
-   print(f"Media: {info["media"]}")
-   print(f"Status: {info["status"]}")
+print("\n")
+
+print(f"Estoque atualizado: {stock}")
+print(f"Pedidos pendentes: {pending}")
+
