@@ -1,15 +1,39 @@
-heightChico = 1.5
-heightJuca = 1.1
+consumption = {}
+totalConsume = 0
+consumeTypes1And2 = 0
+qtdConsumersType1And2 = 0
 
-growthChico = 0.02
-growthJuca = 0.03
+while True:
 
-anos = 0
+   consumerType = int(input("Insira o tipo de consumidor: "))
 
-while (heightJuca < heightChico):
-   anos += 1
-   heightJuca = (heightJuca + growthJuca)
-   heightChico = (heightChico + growthChico) 
+   if (consumerType == 0):
+      break
 
+   consumerNumber = int(input("Insira o número do consumidor: "))
+   consumerQuantity = int(input("Insira a quantidade de kWh consumido: "))
 
-print(f"Levou {anos} anos, Juca: {heightJuca:.3} m > Chico: {heightChico:.3} m")
+   consumerBill = 0.0
+
+   if (consumerType == 1):
+      consumerBill = consumerQuantity * 0.3
+   elif (consumerType == 2):
+      consumerBill = consumerQuantity * 0.5
+   else:
+      consumerBill = consumerQuantity * 0.7
+
+   consumption[consumerNumber] = {"Tipo": consumerType,
+                                  "Quantidade kWh": consumerQuantity,
+                                  "Custo": consumerBill}
+
+for consume in consumption.values():
+   totalConsume += consume["Quantidade kWh"]
+
+for consume in consumption.values():
+   if (consume["Tipo"] == 1 or consume["Tipo"] == 2):
+      consumeTypes1And2 += consume["Quantidade kWh"]
+      qtdConsumersType1And2 += 1
+
+print(f"custo de cada consumidor: {consumption}\n")
+print(f"O cosnumo total de energia de todos os consumidores: {totalConsume}\n")
+print(f"A média de consumo de energia dos tipos 1 e 2 foi: {round((consumeTypes1And2 / qtdConsumersType1And2), 2)}")
